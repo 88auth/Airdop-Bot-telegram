@@ -23,7 +23,7 @@ jobs:
 
       - name: Run script
         env:
-          TELEGRAM_BOT_TOKEN: ${{ secrets.7868497718:AAEGUosdY9H_MWxzNTPCV-zeQ8GhWIQzrNg }}
-          TELEGRAM_CHAT_ID: ${{ secrets.7691790751 }}
-          BEARER_TOKEN: ${{ secrets.AAAAAAAAAAAAAAAAAAAAAF4hjwEAAAAAmq95ltItZph1ewtLoAWFL9Qya7U%3D4qfU51zYbLoJLIeJAwGOdhIfkcmszIjnAIYWs2KRdTBPOhzzlr }}
-        run: python airdrop.py
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          BEARER_TOKEN: ${{ secrets.BEARER_TOKEN }}
+        run: python your_script.py
