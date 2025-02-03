@@ -1,24 +1,15 @@
 import tweepy
-import pandas as pd
-from datetime import datetime
-from google.colab import drive
-import os
 import requests
 import time
-
-# Mount Google Drive
-drive.mount('/content/drive')
-
-# Tentukan folder penyimpanan di Google Drive
-drive_folder = "/content/drive/MyDrive/TwitterData/"
-os.makedirs(drive_folder, exist_ok=True)
+from datetime import datetime
+import os
 
 # Telegram Bot Credentials
-TELEGRAM_BOT_TOKEN = "7868497718:AAEGUosdY9H_MWxzNTPCV-zeQ8GhWIQzrNg"
-TELEGRAM_CHAT_ID = "7691790751"
+TELEGRAM_BOT_TOKEN = os.environ["TELEGRAM_BOT_TOKEN"]
+TELEGRAM_CHAT_ID = os.environ["TELEGRAM_CHAT_ID"]
 
 # Twitter API credentials
-BEARER_TOKEN = "AAAAAAAAAAAAAAAAAAAAAF4hjwEAAAAAmq95ltItZph1ewtLoAWFL9Qya7U%3D4qfU51zYbLoJLIeJAwGOdhIfkcmszIjnAIYWs2KRdTBPOhzzlr"
+BEARER_TOKEN = os.environ["BEARER_TOKEN"]
 
 # Initialize Tweepy Client
 client = tweepy.Client(bearer_token=BEARER_TOKEN)
@@ -72,14 +63,6 @@ def get_twitter_data(query, max_results=10, retries=3):
     
     return []
 
-def save_to_csv(data, filename):
-    """Save collected data to CSV in Google Drive"""
-    df = pd.DataFrame(data)
-    file_path = os.path.join(drive_folder, filename)
-    df.to_csv(file_path, index=False)
-    print(f"Data saved to {file_path} ({len(data)} records)")
-    return file_path
-
 def send_telegram_message(text):
     """Send a text message to Telegram (Markdown enabled)"""
     url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendMessage"
@@ -108,13 +91,6 @@ def send_tweets_to_telegram(tweets):
         send_telegram_message(message)
         time.sleep(1)  # Mencegah rate limit dengan delay 1 detik per pesan
 
-def send_telegram_file(file_path):
-    """Send CSV file to Telegram"""
-    url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendDocument"
-    with open(file_path, "rb") as file:
-        response = requests.post(url, data={"chat_id": TELEGRAM_CHAT_ID}, files={"document": file})
-    return response.json()
-
 if __name__ == "__main__":
     # Number of tweets to collect (max 10 per request)
     tweet_count = 10
@@ -122,16 +98,8 @@ if __name__ == "__main__":
     # Collect data with retry
     tweet_data = get_twitter_data(search_query, tweet_count)
     
-    # Save to CSV in Google Drive
+    # Kirim setiap tweet dalam bubble chat terpisah
     if tweet_data:
-        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-        filename = f"twitter_export_{timestamp}.csv"
-        file_path = save_to_csv(tweet_data, filename)
-        
-        # Kirim setiap tweet dalam bubble chat terpisah
         send_tweets_to_telegram(tweet_data)
-        
-        # Kirim file CSV ke Telegram
-        send_telegram_file(file_path)
     else:
         send_telegram_message("❌ Tidak ada tweet yang ditemukan.")
