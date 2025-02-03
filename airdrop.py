@@ -1,7 +1,7 @@
 import tweepy
 import pandas as pd
 from datetime import datetime
-from google.colab import drive
+# from google.colab import drive
 import os
 import requests
 import time
@@ -72,13 +72,13 @@ def get_twitter_data(query, max_results=10, retries=3):
     
     return []
 
-def save_to_csv(data, filename):
-    """Save collected data to CSV in Google Drive"""
-    df = pd.DataFrame(data)
-    file_path = os.path.join(drive_folder, filename)
-    df.to_csv(file_path, index=False)
-    print(f"Data saved to {file_path} ({len(data)} records)")
-    return file_path
+# def save_to_csv(data, filename):
+#     """Save collected data to CSV in Google Drive"""
+#     df = pd.DataFrame(data)
+#     file_path = os.path.join(drive_folder, filename)
+#     df.to_csv(file_path, index=False)
+#     print(f"Data saved to {file_path} ({len(data)} records)")
+#     return file_path
 
 def send_telegram_message(text):
     """Send a text message to Telegram (Markdown enabled)"""
