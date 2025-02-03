@@ -1,0 +1,29 @@
+name: Twitter Scraper Bot
+
+on:
+  schedule:
+    - cron: '*/15 * * * *'  # Menjalankan setiap 15 menit
+  workflow_dispatch:  # Bisa dijalankan secara manual juga
+
+jobs:
+  run_script:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run script
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.7868497718:AAEGUosdY9H_MWxzNTPCV-zeQ8GhWIQzrNg }}
+          TELEGRAM_CHAT_ID: ${{ secrets.7691790751 }}
+          BEARER_TOKEN: ${{ secrets.AAAAAAAAAAAAAAAAAAAAAF4hjwEAAAAAmq95ltItZph1ewtLoAWFL9Qya7U%3D4qfU51zYbLoJLIeJAwGOdhIfkcmszIjnAIYWs2KRdTBPOhzzlr }}
+        run: python airdrop.py
