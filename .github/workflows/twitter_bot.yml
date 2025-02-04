@@ -1,29 +1,29 @@
-name: Twitter Scraper Bot
+# name: Twitter Scraper Bot
 
-on:
-  schedule:
-    - cron: '*/15 * * * *'  # Menjalankan setiap 15 menit
-  workflow_dispatch:  # Bisa dijalankan secara manual juga
+# on:
+#   schedule:
+#     - cron: '*/15 * * * *'  # Menjalankan setiap 15 menit
+#   workflow_dispatch:  # Bisa dijalankan secara manual juga
 
-jobs:
-  run_script:
-    runs-on: ubuntu-latest
+# jobs:
+#   run_script:
+#     runs-on: ubuntu-latest
 
-    steps:
-      - name: Checkout repo
-        uses: actions/checkout@v3
+#     steps:
+#       - name: Checkout repo
+#         uses: actions/checkout@v3
 
-      - name: Setup Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.10'
+#       - name: Setup Python
+#         uses: actions/setup-python@v4
+#         with:
+#           python-version: '3.10'
 
-      - name: Install dependencies
-        run: pip install -r requirements.txt
+#       - name: Install dependencies
+#         run: pip install -r requirements.txt
 
-      - name: Run script
-        env:
-          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
-          BEARER_TOKEN: ${{ secrets.BEARER_TOKEN }}
-        run: python telegrambot.py
+#       - name: Run script
+#         env:
+#           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+#           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+#           BEARER_TOKEN: ${{ secrets.BEARER_TOKEN }}
+#         run: python telegrambot.py

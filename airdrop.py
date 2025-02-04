@@ -14,11 +14,11 @@ drive_folder = "/content/drive/MyDrive/TwitterData/"
 os.makedirs(drive_folder, exist_ok=True)
 
 # Telegram Bot Credentials
-TELEGRAM_BOT_TOKEN = "7868497718:AAEGUosdY9H_MWxzNTPCV-zeQ8GhWIQzrNg"
-TELEGRAM_CHAT_ID = "7691790751"
+TELEGRAM_BOT_TOKEN = os.environ["TELEGRAM_BOT_TOKEN"]
+TELEGRAM_CHAT_ID = os.environ["TELEGRAM_CHAT_ID"]
 
 # Twitter API credentials
-BEARER_TOKEN = "AAAAAAAAAAAAAAAAAAAAAF4hjwEAAAAAmq95ltItZph1ewtLoAWFL9Qya7U%3D4qfU51zYbLoJLIeJAwGOdhIfkcmszIjnAIYWs2KRdTBPOhzzlr"
+BEARER_TOKEN = os.environ["BEARER_TOKEN"]
 
 # Initialize Tweepy Client
 client = tweepy.Client(bearer_token=BEARER_TOKEN)
